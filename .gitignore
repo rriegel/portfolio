@@ -1,0 +1,44 @@
+# Node.js
+node_modules/
+npm-debug.log*
+
+# Logs
+logs/
+*.log
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+client/node_modules/
+server/node_modules/
+
+# TypeScript
+*.tsbuildinfo
+
+# Build directories
+client/build/
+client/dist/
+server/build/
+server/dist/
+
+# Environment variables
+.env
+
+# macOS
+.DS_Store
+
+# IDE-specific files (VSCode, IntelliJ, etc.)
+.vscode/
+.idea/
+
+# Coverage directory used by testing tools like Jest
+coverage/
+
+# Linting/Formatting
+.eslintcache
+.prettierignore
+
+# Ignore webpack bundle analyzer
+.stats.json
