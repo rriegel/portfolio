@@ -5,6 +5,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { Button, ButtonGroup } from '@mui/material';
 import Home from './routes/Home';
 import Projects from './routes/Projects';
 import AboutMe from './routes/AboutMe';
@@ -15,20 +16,12 @@ export default function App() {
     <Router>
       <div className="App">
         <nav className="App-header">
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/projects">Projects</Link>
-            </li>
-            <li>
-              <Link to="/about">About Me</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
-          </ul>
+          <ButtonGroup variant="contained" aria-label="navigation buttons">
+            <Button component={Link} to="/">Home</Button>
+            <Button component={Link} to="/projects">Projects</Button>
+            <Button component={Link} to="/about">About Me</Button>
+            <Button component={Link} to="/contact">Contact</Button>
+          </ButtonGroup>
         </nav>
 
         <Routes>
