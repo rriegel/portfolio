@@ -6,18 +6,33 @@ import Projects from './routes/Projects';
 import AboutMe from './routes/AboutMe';
 import Contact from './routes/Contact';
 
+const buttonStyle = {
+  backgroundColor: "#282c34",
+  color: 'white',
+  padding: '10px 20px',
+  borderWidth: '2px',
+  borderStyle: 'solid',
+  borderColor: "#363c48",
+  borderRadius: '8px',
+  '&:hover': {
+    backgroundColor: "#363c48",
+  },
+}
+
 export default function App() {
   return (
     <Router>
       <div className="App">
-        <nav className="App-header">
-          <ButtonGroup variant="contained" aria-label="navigation buttons">
-            <Button component={Link} to="/">Home</Button>
-            <Button component={Link} to="/projects">Projects</Button>
-            <Button component={Link} to="/about">About Me</Button>
-            <Button component={Link} to="/contact">Contact</Button>
-          </ButtonGroup>
-        </nav>
+        <div className="App-nav">
+          <nav>
+            <ButtonGroup variant="contained" aria-label="navigation buttons">
+              <Button sx={buttonStyle} component={Link} to="/">Home</Button>
+              <Button sx={buttonStyle} component={Link} to="/projects">Projects</Button>
+              <Button sx={buttonStyle} component={Link} to="/about">About Me</Button>
+              <Button sx={buttonStyle} component={Link} to="/contact">Contact</Button>
+            </ButtonGroup>
+          </nav>
+        </div>
 
         <Routes>
           <Route path="/" element={<Home />} />
