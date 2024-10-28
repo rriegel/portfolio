@@ -124,14 +124,14 @@ const Keyboard = () => {
             width: isSharp ? 40 : 60,
             height: isSharp ? 120 : 180,
             bgcolor: pressedKeys.has(note) ? '#9D7ACA' : isInScale(note) ? 'white' : 'black',
-            color: isSharp ? 'black' : 'white',
+            color: pressedKeys.has(note) ? 'white' : isSharp ? 'black' : 'white',
             border: isInScale(note) ? '2px solid black' : '1px solid gray',
             borderRadius: '4px',
             marginX: isSharp ? '-20px' : '1px',
             zIndex: isSharp ? 10 : 1,
             top: isSharp ? -60 : undefined,
             '&:hover': {
-              color: isSharp ? 'white' : 'black',
+              color: pressedKeys.has(note) ? 'white' : isSharp ? 'white' : 'black',
             }
           }}
         >
