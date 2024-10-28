@@ -38,20 +38,21 @@ const Keyboard = () => {
   const cMajorScale = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 
   const [isMouseDown, setIsMouseDown] = useState(false);
-  
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
-  }, []);
 
   const [pressedKeys, setPressedKeys] = useState<Set<string>>(new Set());
 
   const isInScale = (note: string) => cMajorScale.includes(note);
 
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+  }, []);
+
   const handleKeyDown = (e: KeyboardEvent) => {
     const note = kbToNoteMap[e.key.toUpperCase()];
     if (note && !pressedKeys.has(note)) {
       setPressedKeys((prevKeys) => new Set(prevKeys).add(note));
+      // trigger in tone.js
     }
   };
 
@@ -63,17 +64,19 @@ const Keyboard = () => {
         newKeys.delete(note);
         return newKeys;
       });
+      // turn off in tone.js
     }
   };
 
-  const handleNoteMouseDown = (note: string) => {
+  const handleNoteMouseDown = (e: React.MouseEvent<HTMLButtonElement>, note: string) => {
     setIsMouseDown(true);
     if (note && !pressedKeys.has(note)) {
-        setPressedKeys((prevKeys) => new Set(prevKeys).add(note));
+      setPressedKeys((prevKeys) => new Set(prevKeys).add(note));
+      // trigger in tone.js
     }
   };
 
-  const handleNoteMouseUp = (note: string) => {
+  const handleNoteMouseUp = (e: React.MouseEvent<HTMLButtonElement>, note: string) => {
     setIsMouseDown(false);
     if (note && pressedKeys.has(note)) {
       setPressedKeys((prevKeys) => {
@@ -81,24 +84,27 @@ const Keyboard = () => {
         newKeys.delete(note);
         return newKeys;
       });
+      // turn off in tone.js
     }
   };
 
-  const handleNoteMouseEnter = (note: string) => {
+  const handleNoteMouseEnter = (e: React.MouseEvent<HTMLButtonElement>, note: string) => {
     if (isMouseDown) {
       if (note && !pressedKeys.has(note)) {
         setPressedKeys((prevKeys) => new Set(prevKeys).add(note));
+        // trigger in tone.js
       }
     }
   };
 
-  const handleNoteMouseLeave = (note: string) => {
+  const handleNoteMouseLeave = (e: React.MouseEvent<HTMLButtonElement>, note: string) => {
     if (note && pressedKeys.has(note)) {
       setPressedKeys((prevKeys) => {
         const newKeys = new Set(prevKeys);
         newKeys.delete(note);
         return newKeys;
       });
+      // turn off in tone.js
     }
   };
 
@@ -108,16 +114,16 @@ const Keyboard = () => {
         <Button
           key={note}
           variant="contained"
-          onMouseDown={() => handleNoteMouseDown(note)}
-          onMouseUp={() => handleNoteMouseUp(note)}
-          onMouseEnter={() => handleNoteMouseEnter(note)}
-          onMouseLeave={() => handleNoteMouseLeave(note)}
+          onMouseDown={(e) => handleNoteMouseDown(e, note)}
+          onMouseUp={(e) => handleNoteMouseUp(e, note)}
+          onMouseEnter={(e) => handleNoteMouseEnter(e, note)}
+          onMouseLeave={(e) => handleNoteMouseLeave(e, note)}
           disableRipple
           sx={{
             minWidth: 0,
             width: isSharp ? 40 : 60,
             height: isSharp ? 120 : 180,
-            bgcolor: isInScale(note) ? 'white' : 'black',
+            bgcolor: pressedKeys.has(note) ? '#9D7ACA' : isInScale(note) ? 'white' : 'black',
             color: isSharp ? 'black' : 'white',
             border: isInScale(note) ? '2px solid black' : '1px solid gray',
             borderRadius: '4px',
