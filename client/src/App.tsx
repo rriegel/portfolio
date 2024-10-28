@@ -6,18 +6,21 @@ import Projects from './routes/Projects';
 import AboutMe from './routes/AboutMe';
 import Contact from './routes/Contact';
 
+const buttonGroupStyle = {
+  ".MuiButtonGroup-grouped:not(:last-of-type)": {
+    borderColor: "#363C48",
+  }
+};
+
 const buttonStyle = {
   backgroundColor: "#282c34",
   color: 'white',
   padding: '10px 20px',
-  borderWidth: '2px',
-  borderStyle: 'solid',
-  borderColor: "#363c48",
   borderRadius: '8px',
   '&:hover': {
-    backgroundColor: "#363c48",
+    backgroundColor: "#363C48",
   },
-}
+};
 
 export default function App() {
   return (
@@ -25,7 +28,7 @@ export default function App() {
       <div className="App">
         <div className="App-nav">
           <nav>
-            <ButtonGroup variant="contained" aria-label="navigation buttons">
+            <ButtonGroup sx={buttonGroupStyle} variant="contained" aria-label="navigation buttons">
               <Button sx={buttonStyle} component={Link} to="/">Home</Button>
               <Button sx={buttonStyle} component={Link} to="/projects">Projects</Button>
               <Button sx={buttonStyle} component={Link} to="/about">About Me</Button>
