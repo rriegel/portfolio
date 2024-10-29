@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button } from '@mui/material';
+import { addNote, removeNote } from '../tone/tone.js';
 
 // Define all notes in an octave
 const notes = [
@@ -39,6 +40,8 @@ const Keyboard = () => {
 
   const [isMouseDown, setIsMouseDown] = useState(false);
 
+  const activeNotes: Record<string, boolean> = {};
+
   const [pressedKeys, setPressedKeys] = useState<Set<string>>(new Set());
 
   const isInScale = (note: string) => cMajorScale.includes(note);
@@ -46,65 +49,76 @@ const Keyboard = () => {
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
   }, []);
 
   const handleKeyDown = (e: KeyboardEvent) => {
     const note = kbToNoteMap[e.key.toUpperCase()];
-    if (note && !pressedKeys.has(note)) {
+    if (note && !activeNotes[note]) {
+      activeNotes[note] = true;
       setPressedKeys((prevKeys) => new Set(prevKeys).add(note));
-      // trigger in tone.js
+      addNote(note);
     }
   };
 
   const handleKeyUp = (e: KeyboardEvent) => {
     const note = kbToNoteMap[e.key.toUpperCase()];
     if (note) {
+      activeNotes[note] = false;
       setPressedKeys((prevKeys) => {
         const newKeys = new Set(prevKeys);
         newKeys.delete(note);
         return newKeys;
       });
-      // turn off in tone.js
+      removeNote(note);
     }
   };
 
   const handleNoteMouseDown = (e: React.MouseEvent<HTMLButtonElement>, note: string) => {
     setIsMouseDown(true);
     if (note && !pressedKeys.has(note)) {
+      activeNotes[note] = true;
       setPressedKeys((prevKeys) => new Set(prevKeys).add(note));
-      // trigger in tone.js
+      addNote(note);
     }
   };
 
   const handleNoteMouseUp = (e: React.MouseEvent<HTMLButtonElement>, note: string) => {
     setIsMouseDown(false);
     if (note && pressedKeys.has(note)) {
+      activeNotes[note] = false;
       setPressedKeys((prevKeys) => {
         const newKeys = new Set(prevKeys);
         newKeys.delete(note);
         return newKeys;
       });
-      // turn off in tone.js
+      removeNote(note);
     }
   };
 
   const handleNoteMouseEnter = (e: React.MouseEvent<HTMLButtonElement>, note: string) => {
     if (isMouseDown) {
       if (note && !pressedKeys.has(note)) {
+        activeNotes[note] = true;
         setPressedKeys((prevKeys) => new Set(prevKeys).add(note));
-        // trigger in tone.js
+        addNote(note);
       }
     }
   };
 
   const handleNoteMouseLeave = (e: React.MouseEvent<HTMLButtonElement>, note: string) => {
     if (note && pressedKeys.has(note)) {
+      activeNotes[note] = false;
       setPressedKeys((prevKeys) => {
         const newKeys = new Set(prevKeys);
         newKeys.delete(note);
         return newKeys;
       });
-      // turn off in tone.js
+      removeNote(note);
     }
   };
 
