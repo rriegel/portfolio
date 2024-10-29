@@ -12,6 +12,14 @@ export default function Home() {
       <Typography className="App-header" variant="h2" gutterBottom>Ryan Riegel Portfolio</Typography>
       <Button 
         onClick={() => onStart()}
+        sx={{
+          minWidth: 0,
+          width: 60,
+          height: 60,
+          bgcolor: 'white',
+          color: 'black',
+          borderRadius: '4px'
+        }}
       />
       <Keyboard />
     </div>
