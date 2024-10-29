@@ -8,13 +8,13 @@ async function onStart() {
 
 function addNote(note) {
   const now = Tone.now();
-  let octave = "5";
+  let octave = "4";
   synth.triggerAttack(note+octave+"", now);
 };
 
 function removeNote(note) {
   const now = Tone.now();
-  let octave = "5";
+  let octave = "4";
   synth.triggerRelease(note+octave, now);
 };
 
