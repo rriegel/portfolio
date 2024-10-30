@@ -123,35 +123,46 @@ const Keyboard = () => {
   };
 
   return (
-    <Box display="flex" alignItems="flex-end" justifyContent="center" mt={4}>
-      {notes.map(({ note, isSharp }) => (
-        <Button
-          key={note}
-          variant="contained"
-          onMouseDown={(e) => handleNoteMouseDown(e, note)}
-          onMouseUp={(e) => handleNoteMouseUp(e, note)}
-          onMouseEnter={(e) => handleNoteMouseEnter(e, note)}
-          onMouseLeave={(e) => handleNoteMouseLeave(e, note)}
-          disableRipple
-          sx={{
-            minWidth: 0,
-            width: isSharp ? 40 : 60,
-            height: isSharp ? 120 : 180,
-            bgcolor: pressedKeys.has(note) ? '#9D7ACA' : isInScale(note) ? 'white' : 'black',
-            color: pressedKeys.has(note) ? 'white' : isSharp ? 'black' : 'white',
-            border: isInScale(note) ? '2px solid black' : '1px solid gray',
-            borderRadius: '4px',
-            marginX: isSharp ? '-20px' : '1px',
-            zIndex: isSharp ? 10 : 1,
-            top: isSharp ? -60 : undefined,
-            '&:hover': {
-              color: pressedKeys.has(note) ? 'white' : isSharp ? 'white' : 'black',
-            }
-          }}
-        >
-          {note}
-        </Button>
-      ))}
+    <Box 
+      alignContent="center"
+      justifyContent="center"
+      sx={{
+        margin: "auto",
+        height: "270px",
+        width: "500px",
+        padding: 2,
+        bgcolor: '#DDDBDA',
+        borderRadius: '16px',
+      }}>
+      <Box display="flex" alignItems="flex-end" justifyContent="center" >
+        {notes.map(({ note, isSharp }) => (
+          <Button
+            key={note}
+            variant="contained"
+            onMouseDown={(e) => handleNoteMouseDown(e, note)}
+            onMouseUp={(e) => handleNoteMouseUp(e, note)}
+            onMouseEnter={(e) => handleNoteMouseEnter(e, note)}
+            onMouseLeave={(e) => handleNoteMouseLeave(e, note)}
+            disableRipple
+            sx={{
+              minWidth: 0,
+              width: isSharp ? 40 : 60,
+              height: isSharp ? 120 : 180,
+              bgcolor: pressedKeys.has(note) ? '#9D7ACA' : isInScale(note) ? '#FFFFFF' : 'black',
+              color: pressedKeys.has(note) ? '#FFFFFF' : isSharp ? 'black' : '#FFFFFF',
+              borderRadius: '16px',
+              marginX: isSharp ? '-20px' : '1px',
+              zIndex: isSharp ? 10 : 1,
+              top: isSharp ? -60 : undefined,
+              '&:hover': {
+                color: pressedKeys.has(note) ? '#FFFFFF' : isSharp ? '#FFFFFF' : 'black',
+              }
+            }}
+          >
+            {note}
+          </Button>
+        ))}
+      </Box>
     </Box>
   );
 };
